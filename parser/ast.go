@@ -32,6 +32,12 @@ func (n *Node) add(i lexer.XItem) {
 		n.Val = i
 	} else if beginPathType[n.Val.Typ] {
 		next := &Node{Val: n.Val, Left: n.Left, Right: n.Right, Parent: n}
+		if next.Left != nil {
+			next.Left.Parent = next
+		}
+		if next.Right != nil {
+			next.Right.Parent = next
+		}
 		n.Left, n.Right = next, nil
 		n.Val = i
 	} else if n.Right == nil {
